@@ -1,0 +1,30 @@
+{
+    "name": "snlpnk/live-project",
+    "description": "Sistema de lives com cadastro de leads e chat real-time proprio",
+    "type": "project",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thiago Alexandre",
+            "email": "cursos@vbasolutions.com.br",
+            "role": "Developer",
+            "homepage": "https://www.vbasolutions.com.br"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Source\\": "src/"
+        },
+        "files": [
+            "src/Config.php"
+        ]
+    },
+    "require": {
+        "php": "^7.2",
+        "ext-pdo": "^7.1",
+        "ext-json": "*",
+        "coffeecode/optimizer": "2.0.1",
+        "cboden/ratchet": "v0.4.3"
+    }
+}
