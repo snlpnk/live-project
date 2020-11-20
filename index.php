@@ -24,10 +24,11 @@ $seo = new Optimizer();
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=0">
 
         <?php
-        echo $seo->optimize(
-                ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME),
-                ($getLive->description ?? SITE_DESC),
-                ($getLive->uri ?? LIVE_BASE),LIVE_BASE . "/images/default.jpg")
+        $title = ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME);
+        $desc = ($getLive->description ?? SITE_DESC);
+        $uri = ($getLive->uri ?? LIVE_BASE);
+
+        echo $seo->optimize($title, $desc, $uri,LIVE_BASE . "/images/default.jpg")
             ->openGraph(SITE_NAME,"pt_BR")
             ->twitterCard(CONF_SOCIAL_TWITTER_CREATOR,CONF_SOCIAL_TWITTER_PUBLISHER,CONF_SITE_DOMAIN)
             ->publisher(CONF_SOCIAL_FACEBOOK_PAGE,CONF_SOCIAL_FACEBOOK_AUTHOR)

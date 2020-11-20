@@ -88,10 +88,7 @@ $(function () {
             }
 
             if (data.reload) {
-                window.setTimeout(function () {
-                    window.location.reload();
-                }, 1500);
-
+                window.location.reload();
             }
 
             if (data.redirect) {
