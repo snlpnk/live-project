@@ -1,13 +1,10 @@
 # Live with Websocket Chat System
 
 [![Maintainer](http://img.shields.io/badge/maintainer-@snlpnk-blue.svg?style=flat-square)](https://twitter.com/sanolpunk)
-[![Source Code](http://img.shields.io/badge/source-snlpnk/live-project-blue.svg?style=flat-square)](https://github.com/snlpnk/live-project)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/snlpnk/live-project.svg?style=flat-square)](https://packagist.org/packages/snlpnk/live-project)
 [![Latest Version](https://img.shields.io/github/release/snlpnk/live-project.svg?style=flat-square)](https://github.com/snlpnk/live-project/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build](https://img.shields.io/scrutinizer/build/g/snlpnk/live-project.svg?style=flat-square)](https://scrutinizer-ci.com/g/snlpnk/live-project)
 [![Quality Score](https://img.shields.io/scrutinizer/g/snlpnk/live-project.svg?style=flat-square)](https://scrutinizer-ci.com/g/snlpnk/live-project)
-[![Total Downloads](https://img.shields.io/packagist/dt/snlpnk/live-project.svg?style=flat-square)](https://packagist.org/packages/csnlpnk/live-project)
 
 ###### System developed for the creation of rooms for live events transmitted via YouTube, but with its own access control and chat.
 
