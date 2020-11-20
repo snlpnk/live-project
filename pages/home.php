@@ -24,7 +24,7 @@
                         <div class="ajax_load_content">
                             <img src="<?= LIVE_BASE ?>/images/load.gif" alt="Aguarde, carregando!"
                                  title="Aguarde, carregando!"/>
-                            <p>Aguarde, validando entrada!</p>
+                            <p>Aguarde, validando entrada...</p>
                         </div>
                     </div>
                 </form>

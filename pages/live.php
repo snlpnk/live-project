@@ -45,7 +45,6 @@
                         <button type="submit" id="form-submit" class="message-submit icon-bullhorn">Comentar
                         </button>
                     </div>
-
                     <span class="caracteres">255</span>
 
                 </form>

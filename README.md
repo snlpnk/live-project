@@ -1,11 +1,10 @@
-# Live with Websocket Chat System
+# PHP Live System with Websocket Chat
 
 [![Maintainer](http://img.shields.io/badge/maintainer-@snlpnk-blue.svg?style=flat-square)](https://twitter.com/sanolpunk)
 [![Latest Version](https://img.shields.io/github/release/snlpnk/live-project.svg?style=flat-square)](https://github.com/snlpnk/live-project/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 ###### System developed for the creation of rooms for live events transmitted via YouTube, but with its own access control and chat.
-
 
 Sistema desenvolvido para a criação de salas para eventos ao vivo transmitidos via YouTube, porém com controle próprio de acesso e chat.
 

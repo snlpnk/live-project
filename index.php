@@ -13,10 +13,9 @@ use Source\Models\Report\Online;
 
 $getUrl = filter_input(INPUT_GET, 'url');
 $setUrl = explode("/", $getUrl);
+$getLive = (new Live())->findByUri($setUrl[0]);
 
 $seo = new Optimizer();
-
-$getLive = (new Live())->findByUri("$setUrl[0]");
 ?>
     <!DOCTYPE html>
     <html lang="pt-br">
@@ -25,30 +24,20 @@ $getLive = (new Live())->findByUri("$setUrl[0]");
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=0">
 
         <?php
-        $seo->optimize(
+        echo $seo->optimize(
                 ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME),
                 ($getLive->description ?? SITE_DESC),
-                ($getLive->uri ?? LIVE_BASE),
-            LIVE_BASE . "/images/default.jpg")
-            ->openGraph(
-                    SITE_NAME,
-                    "pt_BR")
-            ->twitterCard(
-                    CONF_SOCIAL_TWITTER_CREATOR,
-                    CONF_SOCIAL_TWITTER_PUBLISHER,
-                    CONF_SITE_DOMAIN)
-            ->publisher(
-                    CONF_SOCIAL_FACEBOOK_PAGE,
-                    CONF_SOCIAL_FACEBOOK_AUTHOR)
-            ->facebook(
-                    CONF_SOCIAL_FACEBOOK_APP)
+                ($getLive->uri ?? LIVE_BASE),LIVE_BASE . "/images/default.jpg")
+            ->openGraph(SITE_NAME,"pt_BR")
+            ->twitterCard(CONF_SOCIAL_TWITTER_CREATOR,CONF_SOCIAL_TWITTER_PUBLISHER,CONF_SITE_DOMAIN)
+            ->publisher(CONF_SOCIAL_FACEBOOK_PAGE,CONF_SOCIAL_FACEBOOK_AUTHOR)
+            ->facebook(CONF_SOCIAL_FACEBOOK_APP)
             ->render();
         ?>
 
-
         <link rel="base" href="<?= LIVE_BASE; ?>/"/>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700' rel='stylesheet' type='text/css'>
-        <link href="<?= LIVE_BASE; ?>/bootcss/fonticon.css" rel="stylesheet">
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700'>
+        <link rel="stylesheet" href="<?= LIVE_BASE; ?>/bootcss/fonticon.css" >
         <link rel="stylesheet" href="<?= LIVE_BASE; ?>/bootcss/reset.css"/>
         <link rel="stylesheet" href="<?= LIVE_BASE; ?>/style.css"/>
         <link rel="shortcut icon" href="<?= LIVE_BASE; ?>/images/favicon.png"/>
@@ -57,30 +46,24 @@ $getLive = (new Live())->findByUri("$setUrl[0]");
         <script src="<?= LIVE_BASE; ?>/scripts/jquery.cookie.js"></script>
 
         <!--[if lt IE 9]>
-            <script src="<?= LIVE_BASE; ?>/scripts/html5shiv.js"></script>
+        <script src="<?= LIVE_BASE; ?>/scripts/html5shiv.js"></script>
         <![endif]-->
 
     </head>
+
     <body>
 
     <main class="main_content">
         <?php
+
         //LEAD GATE COOKIE
         $getCookie = filter_input(INPUT_COOKIE, "activemail", FILTER_DEFAULT);
         $getEvent = filter_input(INPUT_COOKIE, "eventid", FILTER_DEFAULT);
         $getUser = filter_input(INPUT_COOKIE, "userlogged", FILTER_DEFAULT);
 
         //QUERY STRING
-        if (empty($setUrl[0])):
+        if (empty($getLive)):
             require "pages/home.php";
-
-        elseif (!empty($getLive->mode) && empty($setUrl[1])):
-
-            if (!$getUser || $getEvent !== $getLive->id):
-                require "pages/optin.php";
-            else:
-                require "pages/live.php";
-            endif;
 
         elseif (!empty($setUrl[0]) && file_exists("gates/{$setUrl[0]}.php") && !is_dir("gates/{$setUrl[0]}.php")):
 
@@ -91,7 +74,13 @@ $getLive = (new Live())->findByUri("$setUrl[0]");
             endif;
 
         else:
-            require "pages/home.php";
+
+            if (!$getUser || $getEvent !== $getLive->id):
+                require "pages/optin.php";
+            else:
+                require "pages/live.php";
+            endif;
+
         endif;
         ?>
 

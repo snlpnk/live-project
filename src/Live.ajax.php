@@ -31,13 +31,16 @@ if ($postData && $postData['callback_action']):
 
         case 'liveLead':
 
+            /*
+             * Validate posts
+             */
             if (in_array('', $postData)) {
-                $jSON['trigger'] = ["error", "Favor preencha todos os campos para enviar seu contato!"];
+                $jSON['trigger'] = ["error", "Favor preencha todos os campos para continuar."];
                 break;
             }
 
             if (!filter_var($postData['email'], FILTER_VALIDATE_EMAIL)) {
-                $jSON['trigger'] = ["error", "O e-mail informado não parece válido. Favor informe seu e-mail!"];
+                $jSON['trigger'] = ["error", "O e-mail informado não parece válido. Por favor, verifique e tente novamente."];
                 break;
             }
 
@@ -46,31 +49,43 @@ if ($postData && $postData['callback_action']):
 
             unset($postData);
 
+            /*
+             * Get the lead origin
+             */
             $referer = ($getLive ? $liveUri : "home");
 
+            /*
+             * Check if the lead isn't in the database
+             */
             $lead = (new Lead)->find("email = :email", "email={$email}")->fetch();
 
             if(!$lead) {
                 $lead = new Lead;
                 $lead->name = $name;
                 $lead->email = $email;
-                $lead->source = "live_{$liveUri}";
+                $lead->source = "live_{$referer}";
                 $lead->save();
 
+                /*
+                 * If set on, add the lead to ActiveCampaign
+                 */
                 if (ACTIVE_CAMPAIGN) {
                     $lists = explode(',', ACTIVE_CAMPAIGN_LISTS);
                     $activeCampaign = new ActiveCampaign;
                     $activeCampaign->addActive($email, $lists, $name, null, ACTIVE_CAMPAIGN_TAGS);
                 }
-
             }
 
+            /*
+             * Set the credentials
+             */
             setcookie("activemail", base64_encode($email), strtotime("+3days"), "/");
-            setcookie("userlogged", $name, strtotime("+3days"), "/");
-            setcookie("eventid", $getLive->id, strtotime("+3days"), "/");
 
             if ($getLive) {
                 (new Session())->set("authUser", $name);
+
+                setcookie("userlogged", $name, strtotime("+3days"), "/");
+                setcookie("eventid", $getLive->id, strtotime("+3days"), "/");
 
                 $jSON['trigger'] = ["success", "<b class='icon-heart'>Seja muito Bem-vindo(a) {$name},</b> Aguarde. Efetuando entrada na sala da aula..."];
                 $jSON['reload'] = true;
@@ -83,6 +98,9 @@ if ($postData && $postData['callback_action']):
 
         case 'sendComment':
 
+            /*
+             * Get the sender credentials
+             */
             $chatSender = filter_input(INPUT_COOKIE, "userlogged", FILTER_DEFAULT);
             $chatHash = filter_input(INPUT_COOKIE, "activemail", FILTER_DEFAULT);
 
@@ -91,6 +109,9 @@ if ($postData && $postData['callback_action']):
                 break;
             }
 
+            /*
+             * Insert message in the table
+             */
             $chat = new Chat();
             $chat->live_id = $getLive->id ;
             $chat->sender = $chatSender;
@@ -104,7 +125,9 @@ if ($postData && $postData['callback_action']):
 
         case 'liveLoads':
 
-            //OFFER
+            /*
+             * Show the offer link in live (without refresh)
+             */
             $offer = (new Live())->find("uri = :uri", "uri={$liveUri}", "offer, cta_link")->fetch();
             if ($offer->offer == 1) {
                 $jSON['offer'] = $offer->cta_link;
@@ -113,11 +136,15 @@ if ($postData && $postData['callback_action']):
                 $jSON['offer'] = "0";
             }
 
-            //USERS ONLINE
-            $online = (new Online())->find("url = :url AND updated_at >= NOW() - INTERVAL 4 MINUTE", "url={$liveUri}")->count();
+            /*
+             * Users online count to show
+             */
+            $online = (new Online())->find("url = :url AND updated_at >= NOW() - INTERVAL 2 MINUTE", "url={$liveUri}")->count();
             $jSON['online'] = str_pad($online, 2, 0, STR_PAD_LEFT);
 
-            //LOAD COMMENTS
+            /*
+             * Load old comments to new charges
+             */
             $chats = (new Chat())->find("live_id = :live", "live={$getLive->id}")->order("id DESC")->fetch(true);
             if ($chats) {
                 $jSON['output'] = "";
@@ -138,7 +165,9 @@ if ($postData && $postData['callback_action']):
                 }
             }
 
-            //USER SESSION
+            /*
+             * Update user session to validate if still online
+             */
             $upSession = (new Online())->findById((new Session())->online);
             $upSession->lastload = time();
             $upSession->save();

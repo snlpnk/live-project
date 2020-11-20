@@ -146,6 +146,8 @@
 
 .event_login_header p{
     font-size: 0.875em;
+    line-height: 1em;
+    margin-top: 15px;
     text-transform: uppercase;
 }
 
