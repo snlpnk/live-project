@@ -1,4 +1,4 @@
-# CaféApi Library Test
+# Live with Websocket Chat System
 
 [![Maintainer](http://img.shields.io/badge/maintainer-@snlpnk-blue.svg?style=flat-square)](https://twitter.com/sanolpunk)
 [![Source Code](http://img.shields.io/badge/source-snlpnk/live-project-blue.svg?style=flat-square)](https://github.com/snlpnk/live-project)
@@ -9,40 +9,22 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/snlpnk/live-project.svg?style=flat-square)](https://scrutinizer-ci.com/g/snlpnk/live-project)
 [![Total Downloads](https://img.shields.io/packagist/dt/snlpnk/live-project.svg?style=flat-square)](https://packagist.org/packages/csnlpnk/live-project)
 
-###### CaféApi Library is a small set of classes developed in UpInside's Full Stack PHP Developer training for integration into the webservice of a SaaS platform developed in the course..
+###### System developed for the creation of rooms for live events transmitted via YouTube, but with its own access control and chat.
 
-CaféApi Library é um pequeno conjunto de classes desenvolvidas na formação Full Stack PHP Developer da UpInside para integração ao webservice de uma plataforma SaaS desenvolvida no curso.
 
-Você pode saber mais **[clicando aqui](https://www.upinside.com.br/fsphp)**.
+Sistema desenvolvido para a criação de salas para eventos ao vivo transmitidos via YouTube, porém com controle próprio de acesso e chat.
 
 ### Highlights
 
 - Simple installation (Instalação simples)
-- Abstraction of all API methods (Abstração de todos os métodos da API)
-- Easy authentication with login and password (Fácil autenticação com login e senha)
-- Composer ready and PSR-2 compliant (Pronto para o composer e compatível com PSR-2)
-
-## Installation
-
-Uploader is available via Composer:
-
-```bash
-"snlpnk/live-project": "^1.0"
-```
-
-or run
-
-```bash
-composer require snlpnk/live-project
-```
 
 ## Documentation
 
-###### For details on how to use, see a sample folder in the component directory. In it you will have an example of use for each class. It works like this:
+###### Just configure the DEFINES in src / Config.php and execute the SQL file to create the tables in your database and READY:
 
-Para mais detalhes sobre como usar, veja uma pasta de exemplo no diretório do componente. Nela terá um exemplo de uso para cada classe. Ele funciona assim:
+Basta configurar as DEFINES em src/Config.php e executar o arquivo SQL para criar as tabelas no seu banco de dados e PRONTO:
 
-#### User endpoint:
+#### Configurarion:
 
 ```php
 <?php
@@ -84,71 +66,49 @@ if ($user->error()) {
 
 ```php
 <?php
-
-require __DIR__ . "/../vendor/autoload.php";
-
-use RobsonVLeite\CafeApi\Invoices;
-
-$invoices = new Invoices(
-    "suaapi.url.com",
-    "seu@email.com.br",
-    "suasenha"
-);
-
-//index
-$index = $invoices->index(null);
-
-//index filter
-$index = $invoices->index([
-    "wallet_id" => 23,
-    "type" => "fixed_income",
-    "status" => "paid",
-    "page" => 2
-]);
-
-//create
-$invoices->create([
-    "wallet_id" => 23,
-    "category_id" => 3,
-    "description" => "Pagamento Cartão",
-    "type" => "expense",
-    "value" => "25000.20",
-    "due_at" => "2019-10-02",
-    "repeat_when" => "single",
-    "period" => "month",
-    "enrollments" => "1",
-]);
-
-//read
-$invoices->read(91);
-
-//update
-$invoiceId = 91;
-$invoices->update($invoiceId, [
-    "wallet_id" => 23,
-    "category_id" => 3,
-    "description" => "Pagamento Cartão",
-    "value" => "25000.20",
-    "due_day" => 25,
-    "status" => "paid"
-]);
-
-//delete
-$invoices->delete(91);
-
-//test and result
-if ($invoices->error()) {
-    $invoices->error(); //object
-} else {
-    $invoices->response(); //object
-}
+/**
+ * DATABASE
+ */
+define("CONF_DB_HOST", "localhost");
+define("CONF_DB_USER", "root");
+define("CONF_DB_PASS", "");
+define("CONF_DB_NAME", "live");
+/*
+ * CONFIGURAÇÕES DA LIVE
+ */
+define("LIVE_BASE", "https://www.localhost/live-project");
+define("LIVE_OFFER", "COMPRAR AGORA"); 
+/*
+ * ACTIVECAMPAIGN CONFIG
+ */
+define('ACTIVE_CAMPAIGN', 1); 
+define('ACTIVE_CAMPAIGN_URL', ''); 
+define('ACTIVE_CAMPAIGN_KEY', ''); 
+define('ACTIVE_CAMPAIGN_LISTS', '1'); 
+define('ACTIVE_CAMPAIGN_TAGS', 'Leads'); 
+/*
+ * SITE CONFIG
+ */
+define('SITE_NAME', 'LiveProject'); 
+define('SITE_SUBNAME', 'Lives Interativas'); 
+define('SITE_DESC', 'Plataforma de lives com interação.'); 
+define('SITE_COLOR', 'person');
+/*
+ * SOCIAL
+ */
+define("CONF_SOCIAL_TWITTER_CREATOR", "@creator");
+define("CONF_SOCIAL_TWITTER_PUBLISHER", "@creator");
+define("CONF_SOCIAL_FACEBOOK_APP", "5555555555");
+define("CONF_SOCIAL_FACEBOOK_PAGE", "pagename");
+define("CONF_SOCIAL_FACEBOOK_AUTHOR", "author");
+define("CONF_SITE_DOMAIN", "www.localhost");
 ```
 
 ### Others
 
-###### You also have classes for endpoints of portfolios and signatures, all the documentation of use with practical examples is available in the examples folder library. Please check there.
+###### The system also has lead registration in ActiveCampaign and in the database.
 
-Você também conta com classes para os endpoints de carteiras e assinaturas, toda documentação de uso com exemplos práticos está disponível na pasta examples desta biblioteca. Por favor, consulte lá.
+O sistema também conta com cadastro de leads no ActiveCampaign e no banco de dados.
 
 ## Contributing
 
@@ -158,7 +118,7 @@ Please see [CONTRIBUTING](https://github.com/snlpnk/live-project/blob/master/CON
 
 ###### Security: If you discover any security related issues, please email meu@email.com.br instead of using the issue tracker.
 
-Se você descobrir algum problema relacionado à segurança, envie um e-mail para meu@email.com.br em vez de usar o rastreador de problemas.
+Se você descobrir algum problema relacionado à segurança, envie um e-mail para thiago.alexandre@html10.com.br em vez de usar o rastreador de problemas.
 
 Thank you
 
