@@ -28,44 +28,6 @@ Basta configurar as DEFINES em src/Config.php e executar o arquivo SQL para cria
 
 ```php
 <?php
-
-require __DIR__ . "/../vendor/autoload.php";
-
-use RobsonVLeite\CafeApi\Me;
-
-$me = new Me(
-    "suaapi.url.com",
-    "seu@email.com.br",
-    "suasenha"
-);
-
-//me
-$user = $me->me();
-
-//update
-$user->update([
-    "first_name" => "Robson",
-    "last_name" => "Leite",
-    "genre" => "male",
-    "datebirth" => "1980-01-02",
-    "document" => "888888888"
-]);
-
-//photo
-$user->photo($_FILES["photo"]);
-
-//test and result
-if ($user->error()) {
-    $user->error(); //object
-} else {
-    $user->response(); //object
-}
-```
-
-#### Invoices endpoint:
-
-```php
-<?php
 /**
  * DATABASE
  */
@@ -124,8 +86,7 @@ Thank you
 
 ## Credits
 
-- [Robson V. Leite](https://github.com/snlpnk) (Developer)
-- [UpInside Treinamentos](https://github.com/snlpnk) (Team)
+- [Thiago Alexandre](https://github.com/snlpnk) (Developer)
 - [All Contributors](https://github.com/snlpnk/live-project/contributors) (This Rock)
 
 ## License
