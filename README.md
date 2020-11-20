@@ -72,7 +72,7 @@ Please see [CONTRIBUTING](https://github.com/snlpnk/live-project/blob/master/CON
 
 ## Support
 
-###### Security: If you discover any security related issues, please email meu@email.com.br instead of using the issue tracker.
+###### Security: If you discover any security related issues, please email thiago.alexandre@html10.com.br instead of using the issue tracker.
 
 Se você descobrir algum problema relacionado à segurança, envie um e-mail para thiago.alexandre@html10.com.br em vez de usar o rastreador de problemas.
 
