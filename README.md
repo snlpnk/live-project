@@ -1,4 +1,4 @@
-# Live with Websocket Chat System
+# PHP Live System with Websocket Chat
 
 [![Maintainer](http://img.shields.io/badge/maintainer-@snlpnk-blue.svg?style=flat-square)](https://twitter.com/sanolpunk)
 [![Latest Version](https://img.shields.io/github/release/snlpnk/live-project.svg?style=flat-square)](https://github.com/snlpnk/live-project/releases)
