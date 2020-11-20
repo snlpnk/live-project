@@ -3,6 +3,7 @@ ob_start();
 
 require __DIR__ . "/vendor/autoload.php";
 
+use CoffeeCode\Optimizer\Optimizer;
 use Source\Models\Live;
 use Source\Models\Report\Access;
 use Source\Models\Report\Online;
@@ -13,6 +14,8 @@ use Source\Models\Report\Online;
 $getUrl = filter_input(INPUT_GET, 'url');
 $setUrl = explode("/", $getUrl);
 
+$seo = new Optimizer();
+
 $getLive = (new Live())->findByUri("$setUrl[0]");
 ?>
     <!DOCTYPE html>
@@ -21,9 +24,34 @@ $getLive = (new Live())->findByUri("$setUrl[0]");
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=0">
 
-        <title><?= ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME); ?></title>
-        <meta name="description" content="<?= ($getLive->description ?? SITE_DESC); ?>"/>
-        <meta name="robots" content="index, follow"/>
+        <?php
+        $seo->optimize(
+                ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME),
+                ($getLive->description ?? SITE_DESC),
+                ($getLive->uri ?? LIVE_BASE),
+            LIVE_BASE . "/images/default.jpg")
+            ->openGraph(
+                    SITE_NAME,
+                    "pt_BR")
+            ->twitterCard(
+                    CONF_SOCIAL_TWITTER_CREATOR,
+                    CONF_SOCIAL_TWITTER_PUBLISHER,
+                    CONF_SITE_DOMAIN)
+            ->publisher(
+                    CONF_SOCIAL_FACEBOOK_PAGE,
+                    CONF_SOCIAL_FACEBOOK_AUTHOR)
+            ->facebook(
+                    CONF_SOCIAL_FACEBOOK_APP)
+            ->render();
+        ?>
+
+
+        <link rel="base" href="<?= LIVE_BASE; ?>/"/>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="<?= LIVE_BASE; ?>/bootcss/fonticon.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?= LIVE_BASE; ?>/bootcss/reset.css"/>
+        <link rel="stylesheet" href="<?= LIVE_BASE; ?>/style.css"/>
+        <link rel="shortcut icon" href="<?= LIVE_BASE; ?>/images/favicon.png"/>
 
         <script src="<?= LIVE_BASE; ?>/scripts/jquery.js"></script>
         <script src="<?= LIVE_BASE; ?>/scripts/jquery.cookie.js"></script>
@@ -32,54 +60,6 @@ $getLive = (new Live())->findByUri("$setUrl[0]");
             <script src="<?= LIVE_BASE; ?>/scripts/html5shiv.js"></script>
         <![endif]-->
 
-        <link rel="base" href="<?= LIVE_BASE; ?>/"/>
-        <link href='https://fonts.googleapis.com/css?family=<?= GOOGLE_FONT; ?>' rel='stylesheet' type='text/css'>
-        <link href="<?= LIVE_BASE; ?>/bootcss/fonticon.css" rel="stylesheet">
-        <link rel="stylesheet" href="<?= LIVE_BASE; ?>/bootcss/reset.css"/>
-        <link rel="stylesheet" href="<?= LIVE_BASE; ?>/style.css"/>
-        <link rel="shortcut icon" href="<?= LIVE_BASE; ?>/images/favicon.png"/>
-
-        <!--GOOGLE-->
-        <?php
-        if (SITE_SOCIAL_GOOGLE):
-            echo '<link rel="author" href="https://plus.google.com/' . SITE_SOCIAL_GOOGLE_AUTHOR . '/posts"/>' . "\r\n";
-            echo '        <link rel="publisher" href="https://plus.google.com/' . SITE_SOCIAL_GOOGLE_PAGE . '"/>' . "\r\n";
-        endif;
-        ?>
-        <meta itemprop="name" content="<?= ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME); ?>"/>
-        <meta itemprop="description" content="<?= ($getLive->description ?? SITE_DESC); ?>"/>
-        <meta itemprop="image" content="<?= LIVE_BASE; ?>/images/default.jpg"/>
-        <meta itemprop="url" content="<?= ($getLive->uri ?? LIVE_BASE); ?>/"/>
-
-        <!--FACEBOOK-->
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="<?= ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME); ?>"/>
-        <meta property="og:description" content="<?= ($getLive->description ?? SITE_DESC); ?>"/>
-        <meta property="og:image" content="<?= LIVE_BASE; ?>/images/default.jpg"/>
-        <meta property="og:url" content="<?= LIVE_BASE; ?>/"/>
-        <meta property="og:site_name" content="<?= SITE_NAME; ?>"/>
-        <meta property="og:locale" content="pt_BR"/>
-        <?php
-        if (SITE_SOCIAL_FB):
-            if (SITE_SOCIAL_FB_AUTHOR):
-                echo '<meta property="fb:admins" content="' . SITE_SOCIAL_FB_AUTHOR . '" />' . "\r\n";
-            endif;
-            echo '        <meta property="article:author" content="https://www.facebook.com/' . SITE_SOCIAL_FB_PAGE . '" />' . "\r\n";
-            echo '        <meta property="article:publisher" content="https://www.facebook.com/' . SITE_SOCIAL_FB_PAGE . '" />' . "\r\n";
-        endif;
-        ?>
-
-        <!--TWIITER-->
-        <meta property="twitter:card" content="summary_large_image"/>
-        <?php
-        if (SITE_SOCIAL_TWITTER):
-            echo '<meta property="twitter:site" content="@' . SITE_SOCIAL_TWITTER . '" />' . "\r\n";
-        endif;
-        ?>
-        <meta property="twitter:title" content="<?= ($getLive->title ?? SITE_NAME . " | " . SITE_SUBNAME); ?>"/>
-        <meta property="twitter:description" content="<?= ($getLive->description ?? SITE_DESC); ?>"/>
-        <meta property="twitter:image" content="<?= LIVE_BASE; ?>/images/default.jpg"/>
-        <meta property="twitter:url" content="<?= ($getLive->uri ?? LIVE_BASE); ?>/"/>
     </head>
     <body>
 

@@ -8,13 +8,13 @@
                 </div>
 
                 <div class="embed-container">
-                    <iframe width="640" height="360" src="https://www.youtube.com/embed/<?= $setLIVE['live_video']; ?>?rel=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="640" height="360" src="https://www.youtube.com/embed/<?= $getLive->video; ?>?rel=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
                 </div>
 
                 <div class="event_play_embed_cta j_play_cta">
-                    <a class="<?= $setLIVE['live_cta_icon'] ? $setLIVE['live_cta_icon'] : 'icon-fire' ?>"
-                       target="_blank" href="<?= $setLIVE['live_offer'] ? $setLIVE['live_cta_link'] : "0" ?>"
-                       title="<?= $setLIVE['live_cta_text'] ? $setLIVE['live_cta_text'] : OFFER_TITLE ?>"><?= $setLIVE['live_cta_text'] ? $setLIVE['live_cta_text'] : OFFER_TITLE ?></a>
+                    <a class="<?= $getLive->cta_icon ? $getLive->cta_icon : 'icon-fire' ?>"
+                       target="_blank" href="<?= $getLive->offer ? $getLive->cta_link : "0" ?>"
+                       title="<?= $getLive->cta_text ? $getLive->cta_text : LIVE_OFFER ?>"><?= $getLive->cta_text ? $getLive->cta_text : LIVE_OFFER ?></a>
                 </div>
             </div>
         </div>

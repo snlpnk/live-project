@@ -126,7 +126,7 @@ if ($postData && $postData['callback_action']):
 
                     $getEmail = filter_input(INPUT_COOKIE, "activemail", FILTER_DEFAULT);
                     $userComment = ($getEmail == $chat->hash ? "Eu" : mb_convert_case(filter_var($chat->sender, FILTER_SANITIZE_SPECIAL_CHARS), MB_CASE_TITLE));
-                    $userWhen = date_fmt_app($chat->created_at);
+                    $userWhen = (new DateTime($chat->created_at))->format("d/m H:i");
 
                     $jSON['output'] .= "<div class='panel panel-default'>
                         <span class='panel-time'>{$userWhen}</span>
