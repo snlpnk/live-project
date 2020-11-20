@@ -3,8 +3,6 @@
 [![Maintainer](http://img.shields.io/badge/maintainer-@snlpnk-blue.svg?style=flat-square)](https://twitter.com/sanolpunk)
 [![Latest Version](https://img.shields.io/github/release/snlpnk/live-project.svg?style=flat-square)](https://github.com/snlpnk/live-project/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build](https://img.shields.io/scrutinizer/build/g/snlpnk/live-project.svg?style=flat-square)](https://scrutinizer-ci.com/g/snlpnk/live-project)
-[![Quality Score](https://img.shields.io/scrutinizer/g/snlpnk/live-project.svg?style=flat-square)](https://scrutinizer-ci.com/g/snlpnk/live-project)
 
 ###### System developed for the creation of rooms for live events transmitted via YouTube, but with its own access control and chat.
 
