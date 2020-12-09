@@ -13,7 +13,7 @@ class Live extends Model
 
     public function findByUri(string $uri, string $columns = "*"): ?Live
     {
-        $find = $this->find("uri = :uri", "uri={$uri}", $columns);
+        $find = $this->find("uri = :uri AND status = 1", "uri={$uri}", $columns);
         return $find->fetch();
     }
 
