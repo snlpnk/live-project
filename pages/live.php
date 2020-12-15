@@ -4,7 +4,7 @@
 
     .live_header {display: flex; width: calc(100% - 300px); background-color: #2368A2; padding: 10px 50px; align-items: center; justify-content: space-between}
     .live_header_logo_content {display: flex; align-items: center}
-    .live_header_logo {margin-right: 15px}
+    .live_header_logo {margin-right: 15px; height: 41px}
     .live_header_title {color: #fff; font-weight: 300}
     .live_header_title span {font-weight: 800}
     .live_header_logout a {display: flex; flex-flow: revert; color: #fff; font-size: .875em; text-decoration: none; align-items: center}
@@ -21,7 +21,7 @@
     .live_footer_info.live-heart::before {background: url(<?= LIVE_BASE; ?>/images/live-heart.svg); width: 25px; height: 25px; content: ""; margin-right: 5px}
     .live_footer_info.live-comments::before {background: url(<?= LIVE_BASE; ?>/images/live-comment.svg); width: 25px; height: 25px; content: ""; margin-right: 5px}
     .live_footer_info span {margin-right: 4px; font-weight: 800}
-    .live_footer_description {padding: 15px 0;color: #595959;border-top: 1px solid #D9D9D9;margin-top: 15px;font-size: .95em}
+    .live_footer_description {padding: 15px 0;color: #495057;border-top: 1px solid #D9D9D9;margin-top: 15px;font-size: .95em}
 
     .live_call {display: none; justify-content: space-between;}
     .live_call .btn {width: 100%; text-shadow: none;font-weight: 300;font-size: 1em; padding: 6px 20px}
@@ -37,7 +37,7 @@
     .live_chat_content_layer {display: block; margin-bottom: 10px;}
     .live_chat_content_layer:last-of-type {margin-bottom: 0}
     .live_chat_content_layer span {font-weight: 800;color: #212429;position: relative;}
-    .live_chat_content_layer.live_author span::after {background: gold; position: absolute; content: ""; left: -3px; width: calc(100% + 3px); height: 100%; z-index: -5;border-radius: 3px;-webkit-border-radius: 3px; -moz-border-radius: 3px;}
+    .live_chat_content_layer.live_author span::after {background: #F4CA64; position: absolute; content: ""; left: -3px; width: calc(100% + 3px); height: 100%; z-index: -5;border-radius: 3px;-webkit-border-radius: 3px; -moz-border-radius: 3px;}
 
     .live_chat_content_message {color: #495057;}
 
@@ -72,7 +72,7 @@
     <section class="live_header">
 
         <div class="live_header_logo_content">
-            <img class="live_header_logo" src="<?= LIVE_BASE; ?>/images/logo.png" alt="" title="">
+            <img class="live_header_logo" src="<?= LIVE_BASE; ?>/images/logo.svg" alt="" title="">
             <h1 class="live_header_title"><span><?= $getLive->title; ?></span></h1>
         </div>
 
@@ -160,7 +160,7 @@
         var class_author;
 
         if (message.hash === clientInformation.hash) {
-            from = message.author; //Eu
+            from = message.author; //"Eu"
             class_author = "live_author";
         } else {
             from = message.author;
