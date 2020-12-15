@@ -87,7 +87,7 @@ if ($postData && $postData['callback_action']):
                 setcookie("userlogged", $name, strtotime("+3days"), "/");
                 setcookie("eventid", $getLive->id, strtotime("+3days"), "/");
 
-                $jSON['trigger'] = ["success", "<b class='icon-heart'>Seja muito Bem-vindo(a) {$name},</b> Aguarde. Efetuando entrada na sala da aula..."];
+                $jSON['trigger'] = ["success", "<b class='icon-heart'>Seja muito Bem-vindo(a) {$name},</b> Aguarde. Efetuando entrada na sala..."];
                 $jSON['reload'] = true;
                 break;
             }
@@ -119,6 +119,7 @@ if ($postData && $postData['callback_action']):
             $chat->message = $postData["message"];
             $chat->save();
 
+            $jSON['comments'] = str_pad((new Chat())->find("live_id = :live", "live={$getLive->id}")->count(), 3, 0, STR_PAD_LEFT);
             $jSON['success'] = true;
 
             break;
@@ -140,27 +141,27 @@ if ($postData && $postData['callback_action']):
              * Users online count to show
              */
             $online = (new Online())->find("url = :url AND updated_at >= NOW() - INTERVAL 2 MINUTE", "url={$liveUri}")->count();
-            $jSON['online'] = str_pad($online, 2, 0, STR_PAD_LEFT);
+            $jSON['online'] = str_pad($online, 3, 0, STR_PAD_LEFT);
 
             /*
              * Load old comments to new charges
              */
-            $chats = (new Chat())->find("live_id = :live", "live={$getLive->id}")->order("id DESC")->fetch(true);
+            $chats = (new Chat())->find("live_id = :live", "live={$getLive->id}")->order("id ASC")->fetch(true);
+            $jSON['comments'] = str_pad((new Chat())->find("live_id = :live", "live={$getLive->id}")->count(), 3, 0, STR_PAD_LEFT);
+
             if ($chats) {
                 $jSON['output'] = "";
 
                 foreach ($chats as $chat) {
 
                     $getEmail = filter_input(INPUT_COOKIE, "activemail", FILTER_DEFAULT);
-                    $userComment = ($getEmail == $chat->hash ? "Eu" : mb_convert_case(filter_var($chat->sender, FILTER_SANITIZE_SPECIAL_CHARS), MB_CASE_TITLE));
+                    $getAdmin = $getEmail == $chat->hash;
+
+                    $userComment = trim(mb_convert_case(filter_var($chat->sender, FILTER_SANITIZE_SPECIAL_CHARS), MB_CASE_TITLE));
                     $userWhen = (new DateTime($chat->created_at))->format("d/m H:i");
 
-                    $jSON['output'] .= "<div class='panel panel-default'>
-                        <span class='panel-time'>{$userWhen}</span>
-                        <div class='panel-heading'>
-                            <b>{$userComment}:</b>
-                            <span class='panel-body'>{$chat->message}</span>
-                        </div>
+                    $jSON['output'].= "<div class='live_chat_content_layer " . ($getAdmin ? 'live_author' : '') . "'>
+                        <div class='live_chat_content_message'><span>{$userComment}:</span> {$chat->message}</div>
                     </div>";
                 }
             }

@@ -16,6 +16,18 @@ $setUrl = explode("/", $getUrl);
 $getLive = (new Live())->findByUri($setUrl[0]);
 
 $seo = new Optimizer();
+
+$UserLogOff = filter_input(INPUT_GET, 'logout', FILTER_VALIDATE_BOOLEAN);
+if ($UserLogOff):
+
+    unset($_SESSION['authUser'], $_COOKIE['userlogged'], $_COOKIE['eventid']);
+
+    setcookie("userlogged", null, -1, '/');
+    setcookie("eventid", null, -1, '/');
+
+    header('Location: ./' . $setUrl[0]);
+    exit;
+endif;
 ?>
     <!DOCTYPE html>
     <html lang="pt-br">

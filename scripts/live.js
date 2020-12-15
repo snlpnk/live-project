@@ -17,7 +17,7 @@ $(function () {
     });
 
     //EXECUTION TIME
-    if ($('.event_play_embed').length) {
+    if ($('.live_video_content').length) {
         EventLoads();
 
         setInterval(function () {
@@ -48,12 +48,21 @@ $(function () {
                 $('.j_online').html(data.online);
             }
 
+            if (data.comments) {
+                waitForSocketConnection(conn, function() {
+                    conn.send(JSON.stringify({"comments": data.comments}));
+                });
+                $('.j_comment').html(data.comments);
+            }
+
             if (data.output) {
-                $('#display_comment').html(data.output);
+                var chat_content = $('.live_chat_content');
+                chat_content.html(data.output);
+                chat_content.scrollTop($(chat_content)[0].scrollHeight);
             }
             
             if(data.output === "") {
-                $('#display_comment').html("");
+                $('.live_chat_content').html("");
             }
 
         }, 'json');
