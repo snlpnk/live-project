@@ -20,7 +20,6 @@
 
     .live_footer_info.live-heart::before {background: url(<?= LIVE_BASE; ?>/images/live-heart.svg); width: 25px; height: 25px; content: ""; margin-right: 5px}
     .live_footer_info.live-comments::before {background: url(<?= LIVE_BASE; ?>/images/live-comment.svg); width: 25px; height: 25px; content: ""; margin-right: 5px}
-
     .live_footer_info span {margin-right: 4px; font-weight: 800}
     .live_footer_description {padding: 15px 0;color: #595959;border-top: 1px solid #D9D9D9;margin-top: 15px;font-size: .95em}
 
@@ -53,6 +52,7 @@
 
     @media(max-width: 62em){
         .live_header {width: 100%}
+        .live_header_title {display: none}
         .live_content {width: 100%}
         .live_video {padding: 0}
         .live_chat {position: relative; width: 100%; height: auto}
