@@ -4,7 +4,7 @@
 
     .live_header {display: flex; width: calc(100% - 300px); background-color: #2368A2; padding: 10px 50px; align-items: center; justify-content: space-between}
     .live_header_logo_content {display: flex; align-items: center}
-    .live_header_logo {margin-right: 15px; height: 41px}
+    .live_header_logo {margin-right: 15px; height: 41px; width: 29px;}
     .live_header_title {color: #fff; font-weight: 300}
     .live_header_title span {font-weight: 800}
     .live_header_logout a {display: flex; flex-flow: revert; color: #fff; font-size: .875em; text-decoration: none; align-items: center}
