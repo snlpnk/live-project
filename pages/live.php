@@ -28,7 +28,7 @@
 
     .live_chat {position: fixed; right: 0; top: 0; flex-basis: 20%; background-color: #fff; height: 100vh; width: 300px; min-width: 300px}
     .live_chat_header {padding: 20px 20px; font-size: 1em; color: #fff; line-height: .975em; background-color: #1A4971; height: 61px; display: flex;align-items: center;}
-    .live_chat_content {padding: 20px;font-size: .8em;height:calc(85% - 61px);overflow-y: auto;}
+    .live_chat_content {padding: 20px;font-size: .8em;height:calc(85% - 61px);overflow-y: auto;z-index:0}
     .live_chat_content a {color: #6BACDA;}
     .live_chat_content::-webkit-scrollbar {width: 8px;}
     .live_chat_content::-webkit-scrollbar-track {background-color: #cdcdcd;}
