@@ -54,8 +54,8 @@ class Online extends Model
         if (!$session->has("online")) {
             $this->user = ($session->authUser ?? null);
             $this->url = (filter_input(INPUT_GET, "url", FILTER_SANITIZE_STRIPPED) ?? "/");
-            $this->ip = filter_input(INPUT_SERVER, "REMOTE_ADDR");
-            $this->agent = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
+            $this->ip = (filter_input(INPUT_SERVER, "REMOTE_ADDR") ?? "::");
+            $this->agent = (filter_input(INPUT_SERVER, "HTTP_USER_AGENT") ?? "::");
 
             $this->save();
             $session->set("online", $this->id);
